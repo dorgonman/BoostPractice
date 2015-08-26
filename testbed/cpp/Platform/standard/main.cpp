@@ -1,7 +1,4 @@
-# BoostPractice
-please use cmake to generate project file, you can generate win32 and linux project by execute shell scripts under project_generator.
-
-
+/****************************************************************************
 MIT License
 Copyright (c) 2015 horizon-studio
 
@@ -24,3 +21,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+****************************************************************************/
+
+#include <iostream>
+#include <boost/filesystem.hpp>
+using namespace boost::filesystem;
+
+int main(int argc, char* argv[])
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: tut1 path\n";
+        return 1;
+    }
+    std::cout << argv[1] << " " << file_size(argv[1]) << '\n';
+    return 0;
+}

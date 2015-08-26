@@ -1,0 +1,8 @@
+#MESSAGE( STATUS "Link:        LibCommonUtilStatic" )
+
+
+
+
+target_link_libraries(${PROJECT_NAME} LibCommonUtilStatic)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+   

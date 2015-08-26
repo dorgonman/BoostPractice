@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+/build
+/lib/boost_1_59_0
+/proj.win32
