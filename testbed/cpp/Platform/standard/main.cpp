@@ -11,93 +11,80 @@
 #include <cstdlib>
 #include <string>
 #include <stdlib.h>
-#include "vending_machine.h"
+#include "StateMachineContext.h"
+
+#include "jsm.h"
 
 namespace horizon{
-    template<class TMachineType>
-    class UStateMachine{
-        typedef boost::msm::back::state_machine<TMachineType> StateMachineImp;
-    public:
-
-        template<class TEventType>
-        void operator() (const TEventType &e);
-
-        StateMachineImp &machine() {
-            return *m_machine;
-        }
-
-        void setDebug(bool b) {
-            m_bDebug = b;
-        }
-
-        void start() {
-            m_machine->start();
-        }
-
-        void stop() {
-            //timer_service().stop();
-           // join();
-        }
-
-        void printState() {
-            int cs = m_machine->current_state()[0];
-            std::cout << "current_state: " << cs << std::endl;
-        }
-    private:
-
-        boost::shared_ptr<StateMachineImp> m_machine;
-        bool m_bDebug;
-    };
-
-
-    template<class TMachineType> template<class TEventType>
-    inline void UStateMachine<TMachineType>::operator() (const TEventType &e)
-    {
-        boost::mutex::scoped_lock scoped_lock(mutex);
-        using namespace std;
-        if (m_bDebug)
-            cout << "process: " << typeid(e).name() << endl;
-        m_machine->process_event(e);
-        if (m_bDebug)
-            print_state();
+    //list of event
+    namespace events{
+        class GameStartEvent{};
+        class GameExitToTitleViewEvent{};
     }
 
     // The list of FSM states
-    class UInitView : public msm::front::state<>
-    {
+    class UTitleView : public boost::msm::front::state < >{
+    public:
         // empty implementation for the states not wishing to define an entry condition
         // will not be called polymorphic way
-        template <class TEventType, class FSM>
-        void on_entry(Event const& e, FSM &fsm){}
+        template <class Event, class FSM>
+        void on_entry(Event const& e, FSM &fsm){
+            std::cout << "entering: UTitleView" << std::endl;
+        }
 
         template <class Event, class FSM>
-        void on_exit(Event const&, FSM&){}
+        void on_exit(Event const& e, FSM& fsm){
+            std::cout << "on_exit: UTitleView" << std::endl;
+        }
+    };
+
+    class UHomeView : public boost::msm::front::state < >{
+    public:
+        // empty implementation for the states not wishing to define an entry condition
+        // will not be called polymorphic way
+        template <class Event, class FSM>
+        void on_entry(Event const& e, FSM &fsm){
+            std::cout << "entering: UHomeView" << std::endl;
+        }
+
+        template <class Event, class FSM>
+        void on_exit(Event const& e, FSM& fsm){
+            std::cout << "on_exit: UHomeView" << std::endl;
+        }
     };
 
 
 
+    class UGUIViewFSM : public boost::msm::front::state_machine_def < UGUIViewFSM > {
+    private:
+       
 
-    class UGUIViewManager : public msm::front::state_machine_def<UGUIViewManager>{
     public:
-        UGUIViewManager* GetInstance(){
-            static UGUIViewManager fsm;
-            return &fsm;
+        template <class TFSMContext>
+        UGUIViewFSM(TFSMContext &m){
+
         };
-   
-    public:
         // the initial state of the SM. Must be defined
-        typedef UInitView initial_state;
+        typedef UTitleView initial_state;
+        struct transition_table : boost::mpl::vector<
+            //   Start            Event                     Next
+            _row<UTitleView, events::GameStartEvent, UHomeView>,
+            _row<UHomeView,  events::GameExitToTitleViewEvent, UTitleView>
+        >{};
 
 
     };
-};
 
+}
+
+#include <exception>
 int main()
 {
-    horizon::UStateMachine<horizon::UGUIViewFSM> sm;
+    horizon::StateMachineContext<horizon::UGUIViewFSM> sm;
 
     sm.start();
-
+    sm.processEvent(horizon::events::GameStartEvent());
+    sm.stop();
    /* jsm::state_machine<vending_machine_> sm;
     sm.set_debug(false);
     sm.start();
