@@ -210,7 +210,7 @@ struct vending_machine_ : public msm::front::state_machine_def<vending_machine_>
                 //  +---------+-------------+---------+---------------------+----------------------+
                 _row < Idle   ,  exitnow ,     Exit >,
                  row < Idle   ,  coin        , Collect,  &p::t_collect      ,&p::good_coin         >,
-                a_row < Idle   ,  pulse,        Idle,  &p::t_pulse                               >,
+               a_row < Idle   ,  pulse,        Idle,  &p::t_pulse                               >,
 
                 _row < Collect,  exitnow     , Exit >,
                  row < Collect,  select      , Idle,     &p::t_select       ,&p::good_select       >,
@@ -244,7 +244,6 @@ vending_machine_::item const vending_machine_::m_items[] =
 
 void process(jsm::state_machine<vending_machine_> &sm)
 {
-
     vending_machine_ &m = sm.machine();
     while ( !std::cin.eof() && !m.exit) {
         using namespace std;
@@ -269,4 +268,5 @@ void process(jsm::state_machine<vending_machine_> &sm)
 }
 
 }
+
 
