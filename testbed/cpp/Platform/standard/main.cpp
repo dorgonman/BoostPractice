@@ -22,35 +22,59 @@ namespace horizon{
         class GameExitToTitleViewEvent{};
     }
 
-    // The list of FSM states
-    class UTitleView : public boost::msm::front::state < >{
+    class UGUIView : public boost::msm::front::state < > {
     public:
+        UGUIView(){
+
+        }
         // empty implementation for the states not wishing to define an entry condition
         // will not be called polymorphic way
         template <class Event, class FSM>
         void on_entry(Event const& e, FSM &fsm){
-            std::cout << "entering: UTitleView" << std::endl;
+            OnEnter();
         }
 
         template <class Event, class FSM>
         void on_exit(Event const& e, FSM& fsm){
-            std::cout << "on_exit: UTitleView" << std::endl;
+            OnExit();
+        }
+
+    protected:
+        virtual void OnEnter() = 0;
+        virtual void OnExit() = 0 ;
+    };
+
+    // The list of FSM states
+    class UTitleView : public UGUIView{
+    public:
+        UTitleView(){
+        
+        }
+        virtual void OnEnter() override{
+            std::cout << "entering: UTitleView" << std::endl;
+        }
+      
+
+        virtual void OnExit() override{
+            std::cout << "OnExit: UTitleView" << std::endl;
         }
     };
 
-    class UHomeView : public boost::msm::front::state < >{
+    class UHomeView : public UGUIView{
     public:
-        // empty implementation for the states not wishing to define an entry condition
-        // will not be called polymorphic way
-        template <class Event, class FSM>
-        void on_entry(Event const& e, FSM &fsm){
+        UHomeView(){
+        
+        }
+
+        virtual void OnEnter() override{
             std::cout << "entering: UHomeView" << std::endl;
         }
 
-        template <class Event, class FSM>
-        void on_exit(Event const& e, FSM& fsm){
-            std::cout << "on_exit: UHomeView" << std::endl;
+
+        virtual void OnExit() override{
+            std::cout << "OnExit: UHomeView" << std::endl;
         }
+       
     };
 
 
@@ -62,7 +86,6 @@ namespace horizon{
     public:
         template <class TFSMContext>
         UGUIViewFSM(TFSMContext &m){
-
         };
         // the initial state of the SM. Must be defined
         typedef UTitleView initial_state;
@@ -77,14 +100,22 @@ namespace horizon{
 
 }
 
-#include <exception>
-int main()
-{
+void start(){
     horizon::StateMachineContext<horizon::UGUIViewFSM> sm;
 
     sm.start();
     sm.processEvent(horizon::events::GameStartEvent());
+    sm.processEvent(horizon::events::GameExitToTitleViewEvent());
     sm.stop();
+}
+#include <exception>
+int main()
+{
+    start();
+    start();
+    start();
+    start();
+    start();
    /* jsm::state_machine<vending_machine_> sm;
     sm.set_debug(false);
     sm.start();

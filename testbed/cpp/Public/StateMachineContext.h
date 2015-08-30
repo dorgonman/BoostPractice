@@ -35,6 +35,7 @@ namespace horizon{
         }
 
         void start() {
+            //int a = 10;
             m_machine->start();
         }
 
