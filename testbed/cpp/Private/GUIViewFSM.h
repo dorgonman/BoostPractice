@@ -100,7 +100,7 @@ namespace horizon{
 
 }
 
-void start(){
+void startGUIViewFSM(){
     horizon::StateMachineContext<horizon::UGUIViewFSM> sm;
 
     sm.start();
