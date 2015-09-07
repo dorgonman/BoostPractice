@@ -12,6 +12,9 @@ include(../cmake/LibSetting.cmake)
 file(GLOB PROJ_SRCS
  	"cpp/Public/*.h"
     "cpp/Public/*.cpp"
+    "cpp/Private/*.h"
+    "cpp/Private/unit_test/*.hpp"
+    "cpp/Private/*.cpp"
 )
 
 source_group_by_dir(PROJ_SRCS)

@@ -6,120 +6,44 @@
 // vending_machine.cpp : Defines the entry point for the console application.
 //
 
-#include <iostream>
-#include <cctype>                       
-#include <cstdlib>
-#include <string>
-#include <stdlib.h>
-#include "StateMachineContext.h"
-
-#include "jsm.h"
-
-namespace horizon{
-    //list of event
-    namespace events{
-        class GameStartEvent{};
-        class GameExitToTitleViewEvent{};
-    }
-
-    class UGUIView : public boost::msm::front::state < > {
-    public:
-        UGUIView(){
-
-        }
-        // empty implementation for the states not wishing to define an entry condition
-        // will not be called polymorphic way
-        template <class Event, class FSM>
-        void on_entry(Event const& e, FSM &fsm){
-            OnEnter();
-        }
-
-        template <class Event, class FSM>
-        void on_exit(Event const& e, FSM& fsm){
-            OnExit();
-        }
-
-    protected:
-        virtual void OnEnter() = 0;
-        virtual void OnExit() = 0 ;
-    };
-
-    // The list of FSM states
-    class UTitleView : public UGUIView{
-    public:
-        UTitleView(){
-        
-        }
-        virtual void OnEnter() override{
-            std::cout << "entering: UTitleView" << std::endl;
-        }
-      
-
-        virtual void OnExit() override{
-            std::cout << "OnExit: UTitleView" << std::endl;
-        }
-    };
-
-    class UHomeView : public UGUIView{
-    public:
-        UHomeView(){
-        
-        }
-
-        virtual void OnEnter() override{
-            std::cout << "entering: UHomeView" << std::endl;
-        }
-
-
-        virtual void OnExit() override{
-            std::cout << "OnExit: UHomeView" << std::endl;
-        }
-       
-    };
-
-
-
-    class UGUIViewFSM : public boost::msm::front::state_machine_def < UGUIViewFSM > {
-    private:
-       
-
-    public:
-        template <class TFSMContext>
-        UGUIViewFSM(TFSMContext &m){
-        };
-        // the initial state of the SM. Must be defined
-        typedef UTitleView initial_state;
-        struct transition_table : boost::mpl::vector<
-            //   Start            Event                     Next
-            _row<UTitleView, events::GameStartEvent, UHomeView>,
-            _row<UHomeView,  events::GameExitToTitleViewEvent, UTitleView>
-        >{};
-
-
-    };
-
-}
-
-void start(){
-    horizon::StateMachineContext<horizon::UGUIViewFSM> sm;
-
-    sm.start();
-    sm.processEvent(horizon::events::GameStartEvent());
-    sm.processEvent(horizon::events::GameExitToTitleViewEvent());
-    sm.stop();
-}
 #include <exception>
-int main()
+//#include "unit_test/Test1.hpp"
+#include "SMSTest.h"
+//using namespace boost::unit_test;
+/*test_suite* init_unit_test_suite(int)
 {
+   // framework::master_test_suite().
+        //add(BOOST_TEST_CASE(&free_test_function));
+
+    return 0;
+}*/
+
+int main(int argc, char* argv[])
+{
+    //boost::unit_test::unit_test_main(&init_unit_test_suite, argc, argv);
+
     start();
-    start();
-    start();
-    start();
-    start();
-   /* jsm::state_machine<vending_machine_> sm;
-    sm.set_debug(false);
-    sm.start();
-    process(sm);
-    sm.stop();*/
     return 0;
 }
+
+///*
+//void test_case1() { /* ... */ }
+//void test_case2() { /* ... */ }
+//void test_case3() { /* ... */ }
+//void test_case4() { /* ... */ }
+//
+//test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
+//{
+//    test_suite* ts1 = BOOST_TEST_SUITE("test_suite1");
+//    ts1->add(BOOST_TEST_CASE(&test_case1));
+//    ts1->add(BOOST_TEST_CASE(&test_case2));
+//
+//    test_suite* ts2 = BOOST_TEST_SUITE("test_suite2");
+//    ts2->add(BOOST_TEST_CASE(&test_case3));
+//    ts2->add(BOOST_TEST_CASE(&test_case4));
+//
+//    framework::master_test_suite().add(ts1);
+//    framework::master_test_suite().add(ts2);
+//
+//    return 0;
+//}*/
