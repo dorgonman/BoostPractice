@@ -35,9 +35,11 @@ source_group_by_dir(TEST_SRC)
 
 #set_source_files_properties("cpp/unit_test/main.cpp" PROPERTIES HEADER_FILE_ONLY TRUE) 
 
-add_executable(testbed ${PLATFORM_SRCS} ${PROJ_SRCS})
-add_executable(testbedTestCase ${TEST_SRC} ${PROJ_SRCS})
-
+add_library(testbedStatic STATIC ${PROJ_SRCS})
+add_executable(testbed ${PLATFORM_SRCS})
+add_executable(testbedTestCase ${TEST_SRC})
 
 include(../cmake/LibLink.cmake)
 
+target_link_libraries(testbedTestCase testbedStatic)
+target_link_libraries(testbed testbedStatic)
