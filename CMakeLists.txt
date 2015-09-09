@@ -9,4 +9,4 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 
 add_subdirectory(testbed)
-add_subdirectory(LibCommonUtil)
+add_subdirectory(HorizonCore)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
-PROJECT (LibCommonUtil CXX)
+PROJECT (HorizonCore CXX)
 
 include(../cmake/UtilMacro.cmake)
 
@@ -23,8 +23,10 @@ file(GLOB PLATFORM_SRCS
 
 source_group_by_dir(PLATFORM_SRCS)
 
-add_executable(LibCommonUtil ${PLATFORM_SRCS} ${PROJ_SRCS})
-add_library(LibCommonUtilShared SHARED ${PROJ_SRCS})
-add_library(LibCommonUtilStatic STATIC ${PROJ_SRCS})
+add_executable(HorizonCore ${PLATFORM_SRCS})
+add_library(HorizonCoreShared SHARED ${PROJ_SRCS})
+add_library(HorizonCoreStatic STATIC ${PROJ_SRCS})
 
-#generate_export_header(LibCommonUtil EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/LibCommonUtil/cpp/Public/Timer.h)
+#generate_export_header(LibHorizonCore EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/xxxx.h)
+
+include(../cmake/LibLink.cmake)

@@ -17,6 +17,7 @@ file(GLOB PROJ_SRCS
 )
 
 source_group_by_dir(PROJ_SRCS)
+add_library(testbedStatic STATIC ${PROJ_SRCS})
 
 
 file(GLOB PLATFORM_SRCS
@@ -25,6 +26,10 @@ file(GLOB PLATFORM_SRCS
 )
 
 source_group_by_dir(PLATFORM_SRCS)
+add_executable(testbed ${PLATFORM_SRCS})
+
+
+
 
 file(GLOB TEST_SRC
  	"cpp/unit_test/*.hpp"
@@ -34,12 +39,14 @@ file(GLOB TEST_SRC
 source_group_by_dir(TEST_SRC)
 
 #set_source_files_properties("cpp/unit_test/main.cpp" PROPERTIES HEADER_FILE_ONLY TRUE) 
-
-add_library(testbedStatic STATIC ${PROJ_SRCS})
-add_executable(testbed ${PLATFORM_SRCS})
 add_executable(testbedTestCase ${TEST_SRC})
 
 include(../cmake/LibLink.cmake)
 
 target_link_libraries(testbedTestCase testbedStatic)
 target_link_libraries(testbed testbedStatic)
+
+
+add_custom_command(TARGET testbedTestCase
+				   POST_BUILD
+				   COMMAND $(TargetPath) ARGS --result_code=no --report_level=no)

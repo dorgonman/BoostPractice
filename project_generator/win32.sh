@@ -2,7 +2,7 @@
 #set -e
 
 #rm -rf ../proj.win32
-boost_root="$(pwd)/../lib/boost_1_59_0/"
+boost_root="$(pwd)/../thirdparty/boost_1_59_0/"
 mkdir ../proj.win32
 cd ../proj.win32
 cmake ../ -G "Visual Studio 12 2013" \

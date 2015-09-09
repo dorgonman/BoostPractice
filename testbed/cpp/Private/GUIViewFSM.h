@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include "StateMachineContext.h"
 
-#include "jsm.h"
 
 namespace horizon{
     //list of event
