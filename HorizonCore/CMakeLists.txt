@@ -11,6 +11,8 @@ include(../cmake/CommonSetting.cmake)
 file(GLOB PROJ_SRCS
  	"cpp/Public/*.h"
     "cpp/Public/*.cpp"
+   	"cpp/Private/*.h"
+    "cpp/Private/*.cpp"
 )
 
 source_group_by_dir(PROJ_SRCS)
@@ -23,10 +25,10 @@ file(GLOB PLATFORM_SRCS
 
 source_group_by_dir(PLATFORM_SRCS)
 
-add_executable(HorizonCore ${PLATFORM_SRCS})
-add_library(HorizonCoreShared SHARED ${PROJ_SRCS})
+#add_executable(HorizonCore ${PLATFORM_SRCS})
+#add_library(HorizonCoreShared SHARED ${PROJ_SRCS})
 add_library(HorizonCoreStatic STATIC ${PROJ_SRCS})
 
 #generate_export_header(LibHorizonCore EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/xxxx.h)
 
-include(../cmake/LibLink.cmake)
+#include(../cmake/LibLink.cmake)
