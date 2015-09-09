@@ -46,7 +46,7 @@ include(../cmake/LibLink.cmake)
 target_link_libraries(testbedTestCase testbedStatic)
 target_link_libraries(testbed testbedStatic)
 
-
+target_link_libraries(testbedTestCase HorizonCoreStatic)
 add_custom_command(TARGET testbedTestCase
 				   POST_BUILD
 				   COMMAND $(TargetPath) ARGS --result_code=no --report_level=no)
