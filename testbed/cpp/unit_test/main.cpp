@@ -3,7 +3,7 @@
 //#define BOOST_TEST_DYN_LINK
 
 #include "unit_test/GUIViewFSMTestCase.hpp"
-
+#include "unit_test/BoostLogTestCase.hpp"
 /*
 BOOST_LOG_TRIVIAL(trace) << "A trace severity message";
 BOOST_LOG_TRIVIAL(debug) << "A debug severity message";

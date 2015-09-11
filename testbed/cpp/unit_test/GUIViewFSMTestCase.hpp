@@ -1,11 +1,12 @@
-
+#ifndef BOOST_TEST_MODULE
+#define BOOST_TEST_MODULE GUIViewFSMTestCase
+#endif
 
 //#define BOOST_TEST_DYN_LINK
 #include "GUIViewFSM.h"
 #include <boost/test/unit_test.hpp>
 #include <boost/log/trivial.hpp>
-#include "Timer.h"
-
+#include "StateMachineContext.h"
 BOOST_AUTO_TEST_SUITE(GUIViewFSMTestSuit)
 
 BOOST_AUTO_TEST_CASE(GUIViewFSMTestCaseTransision)
@@ -24,8 +25,8 @@ BOOST_AUTO_TEST_CASE(GUIViewFSMTestCaseTransision)
 BOOST_AUTO_TEST_CASE(GUIViewFSMTestCase2)
 {
     BOOST_LOG_TRIVIAL(debug) << "==START GUIViewFSMTestCase2==";
-    Timer t;
-    t.elapsed();
+  //  Timer t;
+   // t.elapsed();
     BOOST_LOG_TRIVIAL(debug) << "==END GUIViewFSMTestCase2==";
     //std::cout << "=============START GUIViewFSMTestCase2==================" << std::endl;
     //startGUIViewFSM();
