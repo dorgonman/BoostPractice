@@ -39,9 +39,18 @@ namespace horizon{
         auto values = rec.attribute_values();
         //rec.attribute_values().
         for (auto value : values){
-            value.first;
-            value.second;
+            std::cout << value.first;
+            //value.second.extract();
+            auto aaa = value.second;
+            //std::cout << value.second.extract_or_default();     
         }
+
+        using boost::log::trivial::severity_level;
+        auto severity = rec.attribute_values()[boost::log::aux::default_attribute_names::severity()].extract<severity_level>();
+        boost::log::v2s_mt_nt5::trivial::severity_level lv = severity.get();
+        const char* str = boost::log::trivial::to_string(lv);
+        //if (!severity || severity.get() <= severity_level::info) {
+         std::cout << "currentLogLevel: " << str << std::endl;
         //basic_formatted_sink_backend::consume(rec, command_line);
        // const char* log_msg = rec[boost::log::expressions::smessage].get().c_str();
         consumeImplement(msg);
