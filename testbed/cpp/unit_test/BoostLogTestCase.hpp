@@ -4,19 +4,9 @@
 
 #include <iostream>
 
-#include <boost/log/common.hpp>
-#include <boost/log/expressions.hpp>
 
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/console.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
 
-#include <boost/log/attributes/timer.hpp>
-#include <boost/log/attributes/named_scope.hpp>
 
-#include <boost/log/sources/logger.hpp>
-
-#include <boost/log/support/date_time.hpp>
 #include <stdexcept>
 #include <string>
 #include <iostream>
@@ -29,12 +19,23 @@
 #include <boost/thread/thread.hpp>
 #include <boost/thread/barrier.hpp>
 
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/log/common.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/attributes/timer.hpp>
+#include <boost/log/attributes/named_scope.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/attributes.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/utility/record_ordering.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/support/date_time.hpp>
 
 namespace logging = boost::log;
 namespace attrs = boost::log::attributes;
@@ -181,6 +182,8 @@ BOOST_AUTO_TEST_CASE(BasicUsage)
     // Add some attributes too
     logging::core::get()->add_global_attribute("TimeStamp", attrs::local_clock());
     logging::core::get()->add_global_attribute("RecordID", attrs::counter< unsigned int >());
+    logging::core::get()->add_global_attribute("ThreadID", boost::this_thread::get_id());
+    
     start();
 
     // Flush all buffered records
@@ -193,6 +196,8 @@ BOOST_AUTO_TEST_CASE(BasicUsage)
 
 BOOST_AUTO_TEST_CASE(TrivialUsage)
 {
+
+   // HO_LOG_DEBUG << "test";
     // Trivial logging: all log records are written into a file
     BOOST_LOG_TRIVIAL(trace) << "TrivialUsage A trace severity message";
     BOOST_LOG_TRIVIAL(debug) << "TrivialUsage A debug severity message";

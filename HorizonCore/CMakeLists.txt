@@ -2,15 +2,17 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 PROJECT (HorizonCore CXX)
 
 include(../cmake/UtilMacro.cmake)
-
 include(../cmake/CommonSetting.cmake)
+include(../cmake/LibSetting.cmake)
 
 
 
 
 file(GLOB PROJ_SRCS
+	"cpp/Public/*.hpp"
  	"cpp/Public/*.h"
     "cpp/Public/*.cpp"
+   	"cpp/Private/*.hpp"
    	"cpp/Private/*.h"
     "cpp/Private/*.cpp"
 )

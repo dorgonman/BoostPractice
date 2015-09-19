@@ -7,8 +7,16 @@
 //
 
 #include "GUIViewFSM.h"
+
+
+#include "HorizonLog.h"
+#include "HorizonCore.h"
 int main()
 {
-    startGUIViewFSM();
+    horizon::HorizonCore::GetInstance()->init();
+    HORIZON_INFO << "TEST";
+    //horizon::log::HORIZON_DEBUG_F << "test";
+  
+   // startGUIViewFSM();
     return 0;
 }
