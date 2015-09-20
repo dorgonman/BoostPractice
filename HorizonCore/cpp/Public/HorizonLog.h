@@ -11,6 +11,9 @@
 
 #ifndef _HORIZON_HORIZON_LOG_H_
 #define _HORIZON_HORIZON_LOG_H_
+
+#define HORIZON_LOG_MAX_LEN 256
+
 namespace horizon{
 
 #define HORIZON_LOG_FUNCTION "  [" <<  __FILE__ << "(" << __LINE__ << ")" << ": " <<  __FUNCTION__ << "]  "
@@ -34,9 +37,10 @@ namespace horizon{
 
     class LogBackend : public boost::log::sinks::basic_formatted_sink_backend < char > {
     public:
-        virtual void consume(const boost::log::record_view& rec, string_type const& logMessage);
+        virtual void consume(const boost::log::record_view& rec, string_type const& msg);
     private:
-        void consumeImplement(const std::string& msg);
+        void logMessage(const boost::log::record_view& rec, const std::string& msg);
+        void logMessageImplement(const std::string& msg);
 
     };
    

@@ -1,4 +1,4 @@
-// Copyright 2013 Joshua Dentoyan
+﻿// Copyright 2013 Joshua Dentoyan
 // showing how to to use timers in MSM
 // distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at
@@ -14,7 +14,7 @@
 int main()
 {
     horizon::HorizonCore::GetInstance()->init();
-    HORIZON_INFO << "TEST";
+    HORIZON_INFO << "TEST" << "\n"  << "test2";
     //horizon::log::HORIZON_DEBUG_F << "test";
   
    // startGUIViewFSM();

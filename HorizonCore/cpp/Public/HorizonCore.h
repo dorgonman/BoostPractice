@@ -14,7 +14,11 @@ namespace horizon{
         static HorizonCore* GetInstance();
 
         void init();
-
+        //flush log to file
+        void flushAllLog();
+    private:
+        void initLog();
+ 
     };
 
 

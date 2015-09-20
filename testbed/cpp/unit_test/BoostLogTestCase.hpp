@@ -169,10 +169,9 @@ BOOST_AUTO_TEST_CASE(BasicUsage)
 
     sink->set_formatter
         (
-        expr::format("%1%: [%2%] [%3%] - %4%")
+        expr::format("%1%: [%2%] - %4%")
         % expr::attr< unsigned int >("RecordID")
         % expr::attr< boost::posix_time::ptime >("TimeStamp")
-        % expr::attr< boost::thread::id >("ThreadID")
         % expr::smessage
         );
 
@@ -182,7 +181,7 @@ BOOST_AUTO_TEST_CASE(BasicUsage)
     // Add some attributes too
     logging::core::get()->add_global_attribute("TimeStamp", attrs::local_clock());
     logging::core::get()->add_global_attribute("RecordID", attrs::counter< unsigned int >());
-    logging::core::get()->add_global_attribute("ThreadID", boost::this_thread::get_id());
+
     
     start();
 

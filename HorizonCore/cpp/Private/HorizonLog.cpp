@@ -21,39 +21,41 @@
 #define HORIZON_ERROR     BOOST_LOG_TRIVIAL(error) << HORIZON_LOG_FUNCTION
 #define HORIZON_FATAL     BOOST_LOG_TRIVIAL(fatal) << HORIZON_LOG_FUNCTION*/
 namespace horizon{
-#if defined(_WIN32) || defined(WIN32)     /* _Win32 is usually defined by compilers targeting 32 or   64 bit Windows systems */
-    void LogBackend::consumeImplement(const std::string& msg){
-  
-
-        WCHAR wszBuf[MAX_LEN] = { 0 };
-        MultiByteToWideChar(CP_UTF8, 0, msg.c_str(), -1, wszBuf, sizeof(wszBuf));
-        OutputDebugStringW(wszBuf);
-        OutputDebugStringA("\n");
-    
-    }
-#endif
-
-    void LogBackend::consume(const boost::log::record_view& rec, string_type const& logMessage){
-
-        std::string msg = logMessage;
-        auto values = rec.attribute_values();
-        //rec.attribute_values().
-        for (auto value : values){
-            std::cout << value.first;
-            //value.second.extract();
-            auto aaa = value.second;
-            //std::cout << value.second.extract_or_default();     
+    void LogBackend::logMessage(const boost::log::record_view& rec, const std::string& msg){
+        //std::cout << msg;
+        if (msg.size() > HORIZON_LOG_MAX_LEN){
+            logMessageImplement(msg.substr(0, HORIZON_LOG_MAX_LEN-1));
+            logMessage(rec, msg.substr(HORIZON_LOG_MAX_LEN - 1, msg.size()));
+           
         }
+        else{
+            logMessageImplement(msg);
+            logMessageImplement("\n");
+        }
+    }
+    void LogBackend::consume(const boost::log::record_view& rec, string_type const& msg){
 
-        using boost::log::trivial::severity_level;
-        auto severity = rec.attribute_values()[boost::log::aux::default_attribute_names::severity()].extract<severity_level>();
-        boost::log::v2s_mt_nt5::trivial::severity_level lv = severity.get();
-        const char* str = boost::log::trivial::to_string(lv);
+        const std::string msgStr = msg;
+        logMessage(rec, msgStr);
+
+
+        //boost::log::core::get()->flush();
+        //auto values = rec.attribute_values();
+        //rec.attribute_values().
+        //for (auto value : values){
+            //std::cout << value.first;
+            //value.second.extract();
+            //auto aaa = value.second;
+            //std::cout << value.second.extract_or_default();     
+        //}
+       // using boost::log::trivial::severity_level;
+       // auto severity = rec.attribute_values()[boost::log::aux::default_attribute_names::severity()].extract<severity_level>();
+       // boost::log::v2s_mt_nt5::trivial::severity_level lv = severity.get();
+       // const char* str = boost::log::trivial::to_string(lv);
         //if (!severity || severity.get() <= severity_level::info) {
-         std::cout << "currentLogLevel: " << str << std::endl;
+       //  std::cout << "currentLogLevel: " << str << std::endl;
         //basic_formatted_sink_backend::consume(rec, command_line);
-       // const char* log_msg = rec[boost::log::expressions::smessage].get().c_str();
-        consumeImplement(msg);
+       // const char* log_msg = rec[boost::log::expressions::smessage].get().c_str();   
        // std::cout << command_line << std::endl;
         //android_LogPriority log_sev = rec[severity].get();
         //const char* log_msg = rec[expr::smessage].get().c_str();
